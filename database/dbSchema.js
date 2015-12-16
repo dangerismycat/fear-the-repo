@@ -50,7 +50,6 @@ export const Bullet = db.define('Bullet', {
 });
 
 // set up foreign keys
-
 User.hasMany(Resume, {onDelete: 'cascade'});
 Resume.hasMany(Block, {onDelete: 'cascade'});
 Block.hasMany(Bullet, {onDelete: 'cascade'});

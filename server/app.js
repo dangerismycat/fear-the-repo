@@ -16,16 +16,16 @@ const pdf = require('html-pdf');
 const Promise = require('bluebird');
 const db = require('../database/dbConfig.js');
 const _ = require('underscore');
+
 const express = require('express');
 const app = express();
-
 
 // Enable webpack middleware if the application is being
 // run in development mode.
 app.use(parser.json());
 
 app.use(session({
-  secret: "Backend is fun because I don't have to deal with React",
+  secret: 'woo secrets',
   resave: false,
   saveUninitialized: true
 }));
@@ -43,26 +43,35 @@ app.use(historyApiFallback({
   ]
 }));
 
+
 /////////////////////////////////////////////////////////////////
 //                                                             //
 //  Linkedin Authorization passport                            //
 //                                                             //
 /////////////////////////////////////////////////////////////////
 
-
 app.use(passport.initialize());
 app.use(cookieParser());
 passport.use( new LinkedinStrategy({  // request fields from facebook
-  profileFields: ['summary','industry','positions','headline','picture-url','first-name','last-name','email-address','location','public-profile-url'],
+  profileFields: ['summary',
+                  'industry',
+                  'positions',
+                  'headline',
+                  'picture-url',
+                  'first-name',
+                  'last-name',
+                  'email-address',
+                  'location',
+                  'public-profile-url'],
   consumerKey: '75wbm6jxhrsauj',
   consumerSecret: 'qz9SGDHb53Hi6tnU',
   callbackURL: '/linkedin'
   //enableProof: false
   },
     (accessToken, refreshToken, profile, done) => {
-    setTimeout(() => {
+    setTimeout( () => {
       return done(null, profile);
-    },0);
+    }, 0);
   }
 ));
 passport.serializeUser((user, done) => { // serialization is necessary for persistent sessions
@@ -76,9 +85,9 @@ app.get('/linkedin', passport.authenticate('linkedin', { scope: ['r_basicprofile
   res.redirect('/returnpage');
   });
 
-app.post('/cookie',function(req,res){
+app.post('/cookie', (req, res) => {
   res.send(req.session.LinkedinData);
-})
+});
 
 
 if (config.env === 'development') {
@@ -101,22 +110,23 @@ if (config.env === 'development') {
 // to an external file so that a deployment server can use them       //
 ////////////////////////////////////////////////////////////////////////
 
+
 /////////////////////////////////////////////////////////////////
 //                                                             //
 //  THESAURUS application                                      //
 //                                                             //
 ///////////////////////////////////////////////////////////////
 
-app.post('/api/thesaurusQuery', (req,res) => {
-//console.log (req.body.word);
-  request('http://words.bighugelabs.com/api/2/ecb6566c60b2ee6f4c85013ebfb5e70b/' + req.body.word +'/json', function (error, response, body) {
+app.post('/api/thesaurusQuery', (req, res) => {
+  request('http://words.bighugelabs.com/api/2/ecb6566c60b2ee6f4c85013ebfb5e70b/'
+           + req.body.word +'/json', (error, response, body) => {
       if (!error && response.statusCode == 200) {
           res.send(body);
-      }else{
+      } else {
         res.sendStatus(404)
       }
-    })
-})
+    });
+});
 
 
 
@@ -128,9 +138,7 @@ app.post('/api/thesaurusQuery', (req,res) => {
 
 app.post('/authentication', utils.checkUser);
 
-//Login
 app.post('/login', (req, res) => {
-  console.log("On my way");
   dbSchema.User.findOne({
       where: {
         email: req.body.email
@@ -146,13 +154,12 @@ app.post('/login', (req, res) => {
               }
             })
             .then( (resume) => {
-                if(resume){
+                if (resume) {
                 utils.createSession(req, res, {id : results.id, resumeId: resume.id});
-                }
-                else{
+                } else {
                 utils.createSession(req, res, {id : results.id, resumeId: 'NA'});
                 }
-            })
+            });
           } else {
             res.status(401).send({
               error: 'incorrect password'
@@ -167,25 +174,25 @@ app.post('/login', (req, res) => {
     });
 });
 
-//Signup
 app.post('/signup', (req, res) => {
   dbSchema.User.findOne({
       where: {
         email: req.body.email
       }
     })
-    .then((results) => {
+    .then( (results) => {
       if (!results) {
         const hashing = Promise.promisify(bcrypt.hash);
         hashing(req.body.password, null, null)
-          .then((hash) => {
+          .then( (hash) => {
             dbSchema.User.create({
               email: req.body.email,
               password: hash
-            }).then((results) => {
-              utils.createSession(req, res, {id: results.id, resumeId: 'NA'});
             })
-          })
+            .then( (results) => {
+              utils.createSession(req, res, {id: results.id, resumeId: 'NA'});
+            });
+          });
       } else {
         res.status(401).send({
           error: 'user already exists'
@@ -194,9 +201,8 @@ app.post('/signup', (req, res) => {
     });
 });
 
-//Logout
 app.post('/logout', (req, res) => {
-  req.session.destroy((err) => {
+  req.session.destroy( (err) => {
     if (err) {
       console.error(err);
       res.status(201).send({
@@ -214,10 +220,9 @@ app.post('/logout', (req, res) => {
 
 /////////////////////////////////////////////////////////////////
 //                                                             //
-// Database methods API:here for now, should be refactored     //
+// Database methods API: here for now, should be refactored    //
 //                                                             //
 /////////////////////////////////////////////////////////////////
-
 
 /*
 To test the API, try this:
@@ -226,38 +231,31 @@ To test the API, try this:
   curl -H "Content-Type: application/json" -X POST -d '{"email":"wo@gmail.com", "resumeTitle":"test", "jobTitle":"bossman", "blockPosition":"2", "startDate":"2014", "endDate":"2015"}' http://localhost:3000/api/block/create
 */
 
-
-//Retrieve resume for existing user
-//Input : userId
-//Output : One complete resume in denormalized structure
-app.post('/api/resume/get', function(req, res) {
+// Retrieve resume for existing user
+// Input : userId
+// Output : One complete resume in denormalized structure
+app.post('/api/resume/get', (req, res) => {
   db.query("SELECT u.id as \"UserId\", res.id as \"resumeId\", blk.id as \"blockId\", bul.id as \"bulletId\", res.name, res.profession, res.city, res.state, res.\"displayEmail\", res.phone, res.\"webLinkedin\", res.\"webOther\", res.\"resumeTitle\", res.\"resumeTheme\", res.\"personalStatement\", res.\"school1Name\", res.\"school1Degree\", res.\"school1EndYear\",res.\"school1Location\", res.\"school2Name\", res.\"school2Degree\", res.\"school2EndYear\", res.\"school2Location\", blk.\"jobTitle\", blk.\"blockPosition\", blk.years, blk.\"companyName\", blk.location, blk.\"blockArchived\", blk.\"blockType\", bul.bullet, bul.\"bulletPosition\", bul.\"bulletArchived\" FROM \"Users\" u LEFT OUTER JOIN \"Resumes\" res ON u.id = res.\"UserId\" LEFT OUTER JOIN \"Blocks\" blk ON res.\"id\" = blk.\"ResumeId\" LEFT OUTER JOIN \"Bullets\" bul ON blk.id = bul.\"BlockId\" WHERE u.id = ?", {
       replacements: [req.body.userID],
       type: db.QueryTypes.SELECT
     })
-    .then(function(info) {
-      // console.log('userID is:', req.body.userID);
-
-      // console.log('res.body is: ', info);
-      // console.log('server response is: ', serverResponseToNewResumeState(info));
-      res.send(serverResponseToNewResumeState(info));
+    .then( (info) => {
+      res.send(utils.serverResponseToNewResumeState(info));
     });
 });
 
 //Update existing resume a. Delete existing informaiton b. Save new information
-//Input : userId, resumeId
-// Output : userID, resumeID, blockID
-
+// Input: userId, resumeId
+// Output: userID, resumeID, blockID
 
 // This saves a resume to the DB.
 app.post('/api/resume/update', (req, res) => {
-  console.log('userID is:', req.body.userID);
   dbSchema.Resume.destroy({
       where: {
         UserId: req.body.userID
       }
     })
-    .then(() => {
+    .then( () => {
       dbSchema.Resume.create({
           name: req.body.resumeHeader.name,
           profession: req.body.resumeHeader.profession,
@@ -284,15 +282,14 @@ app.post('/api/resume/update', (req, res) => {
           //
           //NOTE : These fields are still available for future use in the database
           ////////////////////////////////////////////////////////////////////////
-
         })
-        .then((resume) => {
+        .then( (resume) => {
           dbSchema.User.findOne({
               where: {
                 id: req.body.userID
               }
             })
-            .then((user) => {
+            .then( (user) => {
               user.addResume(resume);
               _.each(req.body.blockChildren, (blockArr) => {
                 dbSchema.Block.create({
@@ -327,24 +324,23 @@ app.post('/api/resume/update', (req, res) => {
     });
 });
 
+
 //Export PDF
+app.post('/api/resume/export', (req, res) => {
+  // generate random 16-digit number
+  const filename = _.random(1000000000000000, 9999999999999999);
 
-app.post('/api/resume/export', function (req, res) {
+  const fileToSend = __dirname.slice(0,-7) + '/dist/pdf/' + filename + '.pdf';
 
-  var filename = "";
-  for (var i = 0; i < 16 ; i++){
-    filename += Math.floor(Math.random()*10)
-  }
-  var fileToSend = __dirname.slice(0,-7) + '/dist/pdf/' + filename + '.pdf'
-  pdf.create(req.body.resume).toFile(fileToSend, function(err, resData) {
+  pdf.create(req.body.resume).toFile(fileToSend, (err, resData) => {
     res.send(resData);
   });
-})
+});
 
 
 // // Mel Test Endpoint
 // // curl -H "Content-Type: application/json" -X POST -d '{"email":"test@gmail.com"}' http://localhost:3000/api/resume/giveMeTestResume
-// devServer.app.post('/api/resume/testSave', function(req, res) {
+// devServer.app.post('/api/resume/testSave', (req, res) => {
 //   console.log('userID is:', req.body.userID)
 //   const response = {
 //     text: 'successful save!'
@@ -352,99 +348,14 @@ app.post('/api/resume/export', function (req, res) {
 //   res.send(response);
 // });
 
-
 // // Mel Test Endpoint
 // // curl -H "Content-Type: application/json" -X POST -d '{"email":"test@gmail.com"}' http://localhost:3000/api/resume/giveMeTestResume
-// devServer.app.post('/api/resume/giveMeTestResume', function(req, res) {
+// devServer.app.post('/api/resume/giveMeTestResume', (req, res) => {
 //   console.log('userID is:', req.body.userID);
 //   console.log('res.body is: ', res.body);
-//   console.log('server response is: ', serverResponseToNewResumeState(res.body));
+//   console.log('server response is: ', utils.serverResponseToNewResumeState(res.body));
 
-//   res.send(serverResponseToNewResumeState(res.body));
+//   res.send(utils.serverResponseToNewResumeState(res.body));
 // });
 
-
-
-//////////////////////////////////////////////////////////////
-//                       Helper functions                   //
-//////////////////////////////////////////////////////////////
-
-function serverResponseToNewResumeState(serverResponse) {
-  var newResumeState = {};
-
-  if (serverResponse[0]) {
-      newResumeState.resumeId = serverResponse[0].resumeId,
-      newResumeState.resumeTitle = serverResponse[0].resumeTitle,
-      newResumeState.resumeTheme = serverResponse[0].resumeTheme,
-      newResumeState.serverIsSaving = 'no',
-
-      newResumeState.resumeHeader = {
-        name: serverResponse[0].name,
-        profession: serverResponse[0].profession,
-        city: serverResponse[0].city,
-        state: serverResponse[0].state,
-        displayEmail: serverResponse[0].displayEmail,
-        phone: serverResponse[0].phone,
-        webLinkedin: serverResponse[0].webLinkedin,
-        webOther: serverResponse[0].webOther
-      },
-
-      newResumeState.resumeFooter = {
-        school1: {
-          name: serverResponse[0].school1Name,
-          degree: serverResponse[0].school1Degree,
-          schoolEndYear: serverResponse[0].school1EndYear,
-          location: serverResponse[0].school1Location
-        },
-        school2: {
-          name: serverResponse[0].school2Name,
-          degree: serverResponse[0].school2Degree,
-          schoolEndYear: serverResponse[0].school2EndYear,
-          location: serverResponse[0].school2Location
-        },
-        personalStatement: serverResponse[0].personalStatement
-      }
-  }
-
-  newResumeState.blockChildrenTempObj = {};
-  serverResponse.forEach(function(bullet) {
-    // check to see if the block is in the blockChildren OBJ yet.
-    if (!newResumeState.blockChildrenTempObj[bullet.blockPosition]) {
-      newResumeState.blockChildrenTempObj[bullet.blockPosition] = {
-        blockId: bullet.blockId,
-        blockType: bullet.blockType,
-        companyName: bullet.companyName,
-        jobTitle: bullet.jobTitle,
-        years: bullet.years,
-        location: bullet.location,
-        bulletChildrenTempObj: {},
-        blockPosition: bullet.blockPosition,
-        archived: bullet.blockArchived
-      };
-    }
-
-    newResumeState.blockChildrenTempObj[bullet.blockPosition].bulletChildrenTempObj[bullet.bulletPosition] = {
-      text: bullet.bullet, // best line ever
-      archived: bullet.bulletArchived
-    };
-  })
-
-
-  newResumeState.blockChildren = [];
-
-  for (var key in newResumeState.blockChildrenTempObj) {
-    newResumeState.blockChildren[key] = newResumeState.blockChildrenTempObj[key]
-  }
-  delete newResumeState.blockChildrenTempObj;
-
-  newResumeState.blockChildren.forEach(function(blockChild) {
-    blockChild.bulletChildren = [];
-    for (var key in blockChild.bulletChildrenTempObj) {
-      blockChild.bulletChildren[key] = blockChild.bulletChildrenTempObj[key]
-    }
-    delete blockChild.bulletChildrenTempObj;
-  })
-
-  return newResumeState;
-};
 export default app;
