@@ -9,9 +9,9 @@ import Radium from 'radium';
 import { Footer } from 'components/footer';
 import { resetResume } from 'actions/resumeActions';
 import { loginUser, signupUser, logout } from 'actions/titleBarActions';
-import { enableSubmit,
-         disableSubmit,
-         displayAuthMessage } from 'actions/validationActions';
+import { disableSubmit,
+         displayAuthMessage,
+         enableSubmit } from 'actions/validationActions';
 import { isDefined,
          isValidEmail,
          matches } from 'utils/validation';
@@ -22,7 +22,7 @@ import { AppBar,
          RefreshIndicator,
          TextField } from 'material-ui/lib';
 import { styles } from 'styles/CoreLayoutStyles';
-import { MasterTheme } from 'styles/MasterTheme';
+// import { MasterTheme } from 'styles/MasterTheme';
 
 
 const ActionCreators = {
@@ -51,8 +51,8 @@ class CoreLayout extends React.Component {
     static propTypes = {
       actions: PropTypes.object,
       canSubmitAuth: PropTypes.bool,
-      currentAuthMessage: PropTypes.string,
       children: PropTypes.element,
+      currentAuthMessage: PropTypes.string,
       loggedIn: PropTypes.bool,
       pageYouAreOn: PropTypes.string,
       userLoginInfo: PropTypes.string
@@ -82,8 +82,8 @@ class CoreLayout extends React.Component {
   // AUTH METHODS
   handleLogin() { // TODO: use actions here?
     this.setState({
-      userAlreadyExists: false,
-      spinning: true
+      spinning: true,
+      userAlreadyExists: false
     });
     const userLoginInfo = {
       email: this.refs.email.getValue(),
@@ -160,8 +160,8 @@ class CoreLayout extends React.Component {
       },
       error: () => {
         this.setState({
-          userAlreadyExists: true,
-          spinning: false
+          spinning: false,
+          userAlreadyExists: true
         });
       }
     });
@@ -222,7 +222,9 @@ showLoginPopover(key, e) {
   }
 
   render() {
-    const { canSubmitAuth, currentAuthMessage, loggedIn } = this.props;
+    const { canSubmitAuth,
+            currentAuthMessage,
+            loggedIn } = this.props;
 
     // styles.rezableName.color = this.props.pageYouAreOn === '/' ? MasterTheme.orange : MasterTheme.darkGray;
     styles.editResumeButton.display = this.props.pageYouAreOn === '/resume' ? 'none' : 'inline-block';
@@ -293,8 +295,8 @@ showLoginPopover(key, e) {
                    targetOrigin={{ horizontal: 'right', vertical: 'top' }}
                    onRequestClose={this.closePopover.bind(this, 'pop')}
                    canAutoPosition={false}
-                   style={{width: '300px', marginTop: '16px'}} >
-            <div style={{ padding: '20px' }}>
+                   style={styles.signupPopover} >
+            <div style={styles.signupPopoverDiv}>
               <TextField ref='email'
                          hintText='Email'
                          onBlur={e => this.validateField(e, [isDefined, isValidEmail], 'email')}

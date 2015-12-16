@@ -7,6 +7,7 @@ import { createDevToolsWindow } from '../utils';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
 
+
 @DragDropContext(HTML5Backend)
 export default class Root extends React.Component {
   static propTypes = {

@@ -178,7 +178,7 @@ export function getResumeFromServerDBAsync(payload) { // rename to "serverupdate
         dispatch(updateResumeWithServerResponse(serverResponseJavascriptObject));
       })
       .then(() => {
-        dispatch(serverIsSavingUpdate('resumeHeader.name of received Resume:' + JSON.stringify(payload.resumeHeader.name)))  // FIXME: this line gives an error, cannot read property payload of undefined
+        dispatch(serverIsSavingUpdate('resumeHeader.name of received Resume:' + JSON.stringify(payload.resumeHeader.name)));  // FIXME: this line gives an error, cannot read property payload of undefined
       }); // TODO: this needs to eventually be a server response that has {text: 'successful save!'} added to the resume body object.
           // TODO: this needs error handling
   };

@@ -88,7 +88,8 @@ export default class Heading extends React.Component {
             connectDropTarget,
             currentTheme,
             isDragging,
-            resumeThemes } = this.props;
+            resumeThemes,
+            styles } = this.props;
 
     const blockDrag = {
       opacity: isDragging ? 0 : 1,

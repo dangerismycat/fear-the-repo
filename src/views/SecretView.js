@@ -2,7 +2,6 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import counterActions from 'actions/counter';
-// import { RaisedButton } from 'material-ui/lib';
 
 
 const mapStateToProps = (state) => ({

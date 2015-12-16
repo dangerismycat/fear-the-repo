@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router';
 import Radium from 'radium';
 
 import { styles } from 'styles/footerStyles';

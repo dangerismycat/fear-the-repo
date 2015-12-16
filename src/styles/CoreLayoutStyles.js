@@ -1,11 +1,10 @@
 import { MasterTheme } from 'styles/MasterTheme';
 
 const font = MasterTheme.muli;
-const fontsize = '14pt';
-const buttonTopMargin = '4px';
 const errorTextMargin = '20px 0 0 30px';
 
 export const styles = {
+  // Title Bar
   editResumeButton: {
     borderRadius: '5px',
     color: MasterTheme.orange,
@@ -107,15 +106,20 @@ export const styles = {
     marginLeft: '30px',
     textDecoration: 'none'
   },
-  buttonLabelStyle: {
-    textTransform: 'none'
+  logo: {
+    fill: MasterTheme.orange,
+    width: '50px',
+    marginRight: '-20px',
+    marginTop: '2px'
   },
-  button: {
-    float: 'left',
-    marginRight: '30px',
-    marginTop: buttonTopMargin,
-    fontSize: fontsize,
-    fontFamily: font
+
+  // Auth Popover
+  signupPopover: {
+    width: '300px',
+    marginTop: '16px'
+  },
+  signupPopoverDiv: {
+    padding: '20px'
   },
   errorText: {
     margin: errorTextMargin,
@@ -124,12 +128,6 @@ export const styles = {
   disabledText: {
     margin: errorTextMargin,
     color: MasterTheme.midGray
-  },
-  logo: {
-    fill: MasterTheme.orange,
-    width: '50px',
-    marginRight: '-20px',
-    marginTop: '2px'
   },
   spinnerColor: MasterTheme.orange
 };

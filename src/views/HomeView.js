@@ -4,9 +4,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import counterActions from 'actions/counter';
 import Radium from 'radium';
-import { Scroll, Link, Element, Events } from 'react-scroll';
+import { Element, Link } from 'react-scroll';
 
-import { FlatButton, Paper } from 'material-ui/lib';
 import { styles } from 'styles/HomeViewStyles';
 
 

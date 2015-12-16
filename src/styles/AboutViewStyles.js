@@ -5,7 +5,6 @@ const font = MasterTheme.muli;
 export const styles = {
   wholeView: {
     backgroundColor: MasterTheme.midGray,
-    // paddingBottom: '10px',
     color: MasterTheme.white,
     fontFamily: font,
     height: '100%',

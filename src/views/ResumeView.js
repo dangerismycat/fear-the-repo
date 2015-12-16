@@ -79,10 +79,10 @@ const mapStateToProps = (state) => ({
   currentErrorMessage: state.validationReducer.currentErrorMessage,
   currentTheme: state.resumeReducer.resumeTheme,
   loggedIn: state.titleBarReducer.loggedIn,
+  resumeId: state.titleBarReducer.resumeId || null,
   resumeState: state.resumeReducer,
   routerState: state.router,
-  userID: state.titleBarReducer.userID || null,
-  resumeId: state.titleBarReducer.resumeId || null
+  userID: state.titleBarReducer.userID || null
 });
 const mapDispatchToProps = (dispatch) => ({
   actions: bindActionCreators(ActionCreators, dispatch)
@@ -130,10 +130,9 @@ class ResumeView extends React.Component {
 
   state = {
     validations: {
-      name: false,
-      email: false,
       city: false,
-      // state: false, // Using just one location field that includes City, ST will be much easier to format in resumeHeader. We can repurpose 'city' for that
+      email: false,
+      name: false,
       phone: false
     }
   }
@@ -206,11 +205,11 @@ class ResumeView extends React.Component {
     const { bullet, bulletIndex } = this.findBullet(draggedId, blockIndex);
 
     this.props.actions.moveBullet({
-      bulletIndex: bulletIndex,
       atIndex: atIndex,
+      blockChildren: this.props.resumeState.blockChildren,
       bullet: bullet,
-      parentBlockIndex: blockIndex,
-      blockChildren: this.props.resumeState.blockChildren
+      bulletIndex: bulletIndex,
+      parentBlockIndex: blockIndex
     });
   }
 

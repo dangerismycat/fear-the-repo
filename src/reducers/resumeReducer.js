@@ -2,9 +2,9 @@ import { createReducer } from '../utils';
 import Immutable from 'immutable';
 import _ from 'underscore';
 
-import { dummyResume,
-         blankBulletBlock,
-         blankNoBulletBlock } from 'utils/dummyResume';
+import { blankBulletBlock,
+         blankNoBulletBlock,
+         dummyResume } from 'utils/dummyResume';
 
 import { ADD_BLOCK,
          ADD_BULLET,
@@ -121,7 +121,7 @@ export default createReducer(initialState, {
         _endYear = payload.positions.values[0].endDate.year || '[enter end year]';
       }
     } else {
-      _companyName =  '[company name]';
+      _companyName = '[company name]';
       _jobTitle = '[job title]';
       _text = '[contribution to project]';
       _startYear = '[enter start year]';

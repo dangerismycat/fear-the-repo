@@ -1,7 +1,7 @@
 export const printStyles =
 `<style>
 div {
-	border-width: 0px ! important;		
+	border-width: 0px ! important;
  	border-radius: 0px !important;
  	box-shadow: none !important;}
 

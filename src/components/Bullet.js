@@ -4,6 +4,8 @@ import Editor from 'react-medium-editor';
 import Radium from 'radium';
 
 
+/*** Begin DnD requirements ***/
+
 const Types = {
   BLOCK: 'block',
   BULLET: 'bullet'
@@ -85,6 +87,9 @@ const bulletTarget = {
         relevant node inside its render() as draggable */
   isDragging: monitor.isDragging()
 }))
+
+/*** End DnD requirements ***/
+
 
 @Radium
 export default class Bullet extends React.Component {

@@ -105,17 +105,18 @@ const themeGlobals = {
   //   accentColorBG: lightGray,
   //   linkColor: 'rgb(128, 169, 135)'
   // }
-}
+};
 
 export const resumeThemes = {
 
+/*** MODERN ***/
   'Modern': {
     headerDiv: {
       // backgroundColor: 'rgba(255,100,100, .1)',
       paddingTop: themeGlobals.Default.topMargin,
       paddingLeft: themeGlobals.Default.sideMargin,
       paddingRight: themeGlobals.Default.sideMargin,
-      position: 'relative' //keep this so child el go where they should
+      position: 'relative' // keep this so child el go where they should
     },
     headerNameDiv: {
       // backgroundColor: 'rgba(255,100,100, .1)'
@@ -136,7 +137,6 @@ export const resumeThemes = {
     },
 
 
-
     name: {
       display: 'inline-block',
       fontWeight: '800',
@@ -145,7 +145,6 @@ export const resumeThemes = {
       fontFamily: themeGlobals.Default.nameFont,
       color: themeGlobals.Default.accentColor
     },
-
 
 
     location: {
@@ -179,7 +178,6 @@ export const resumeThemes = {
       fontSize: themeGlobals.Default.resumeHeaderFontSize,
       fontFamily: themeGlobals.Default.resumeHeaderFont
     },
-
 
 
     webLinkedin: {
@@ -248,7 +246,7 @@ export const resumeThemes = {
 
     headingTitle: {
       fontWeight: 'bold',
-      fontSize: '14px',
+      // fontSize: '14px',
       paddingTop: '10px',
       fontSize: themeGlobals.Default.headingsFontSize,
       fontFamily: themeGlobals.Default.headingsFont
@@ -266,7 +264,6 @@ export const resumeThemes = {
       fontSize: themeGlobals.Default.bulletFontSize,
       marginTop: '6px'
     },
-
 
 
     blockDiv: {
@@ -287,39 +284,7 @@ export const resumeThemes = {
   },
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/*** EXPERIENCED ***/
   'Experienced': {
     headerDiv: {
       // backgroundColor: 'rgba(255,100,100, .1)',
@@ -353,7 +318,6 @@ export const resumeThemes = {
     },
 
 
-
     name: {
       display: 'inline-block',
       fontWeight: 'bold',
@@ -362,7 +326,6 @@ export const resumeThemes = {
       fontFamily: themeGlobals.Experienced.nameFont,
       color: themeGlobals.Experienced.accentColor
     },
-
 
 
     location: {
@@ -398,7 +361,6 @@ export const resumeThemes = {
     },
 
 
-
     webLinkedin: {
       color: themeGlobals.Experienced.linkColor,
       display: 'block',
@@ -411,7 +373,6 @@ export const resumeThemes = {
       fontSize: themeGlobals.Experienced.resumeHeaderFontSize,
       fontFamily: themeGlobals.Experienced.resumeHeaderFont
     },
-
 
 
     headerDividerLine: {
@@ -469,7 +430,7 @@ export const resumeThemes = {
 
     headingTitle: {
       fontWeight: 'bold',
-      fontSize: '14px',
+      // fontSize: '14px',
       paddingTop: '5px',
       fontSize: themeGlobals.Experienced.headingsFontSize,
       fontFamily: themeGlobals.Experienced.headingsFont
@@ -503,27 +464,7 @@ export const resumeThemes = {
   },
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/*** INNOVATOR ***/
   'Innovator': {
     headerDiv: {
       // backgroundColor: 'rgba(255,100,100, .1)',
@@ -558,7 +499,6 @@ export const resumeThemes = {
     },
 
 
-
     name: {
       display: 'inline-block',
       fontWeight: '800',
@@ -567,7 +507,6 @@ export const resumeThemes = {
       fontFamily: themeGlobals.Innovator.nameFont,
       color: themeGlobals.Innovator.accentColor
     },
-
 
 
     location: {
@@ -603,7 +542,6 @@ export const resumeThemes = {
     },
 
 
-
     webLinkedin: {
       color: themeGlobals.Innovator.linkColor,
       display: 'block',
@@ -616,7 +554,6 @@ export const resumeThemes = {
       fontSize: themeGlobals.Innovator.resumeHeaderFontSize,
       fontFamily: themeGlobals.Innovator.resumeHeaderFont
     },
-
 
 
     headerDividerLine: {
@@ -674,7 +611,7 @@ export const resumeThemes = {
 
     headingTitle: {
       fontWeight: 'bold',
-      fontSize: '14px',
+      // fontSize: '14px',
       paddingTop: '10px',
       fontSize: themeGlobals.Innovator.headingsFontSize,
       fontFamily: themeGlobals.Innovator.headingsFont
@@ -697,18 +634,13 @@ export const resumeThemes = {
 
     blockDiv: {
       marginLeft: themeGlobals.Innovator.sideMargin,
-      marginLeft: themeGlobals.Innovator.sideMargin,
       position: 'relative'
     },
 
     headingDiv: {
       marginLeft: themeGlobals.Innovator.sideMargin,
-      marginLeft: themeGlobals.Innovator.sideMargin,
       position: 'relative'
     }
-  },
-
-
-
+  }
 
 };

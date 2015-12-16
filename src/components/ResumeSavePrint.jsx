@@ -37,7 +37,7 @@ export default class ResumeSavePrint extends React.Component {
       _.map(this.props.validations, (validation, key) => this.props.validations[key] = true);
       this.props.actions.enableSubmit('Resume');
     } else {
-      alert('To load a resume, please signup above');
+      alert('To load a resume, please signup above'); // TODO: replace for better UX
     }
   }
 
@@ -48,7 +48,7 @@ export default class ResumeSavePrint extends React.Component {
       wrappedForServer.userID = this.props.userID;
       this.props.actions.sendResumeToServerAsync(wrappedForServer);
     } else {
-      alert('To save a resume, please signup above');
+      alert('To save a resume, please signup above'); // TODO: replace for better UX
     }
   }
 
@@ -90,14 +90,18 @@ export default class ResumeSavePrint extends React.Component {
     this.props.actions.getThesaurusResultsAsync(target);
   }
 
-  // This will cause a resume to automatically call the server and load the logged-in user's resume.
-  // Do no run unless we decied to put some logic in to deal with unlogged in users, or clientIsDirty=true
-  // componentDidMount() {
-  //   console.log("Loading resume data from server...")
-  //   this.handleLoad();
-  // }
+  /* This will cause a resume to automatically call the server and load the logged-in user's resume.
+     Do not run unless we put in some logic to deal with not-logged-in users, or clientIsDirty=true
+     componentDidMount() {
+       console.log("Loading resume data from server...")
+       this.handleLoad();
+     } */
+
   showPopup() {
-    const linkedInWindow = window.open('http://' + window.location.hostname + (window.location.port ? ':' : '') + window.location.port + '/linkedin', 'window', 'width=640,height=480,resizable,scrollbars,toolbar,menubar');
+    const linkedInWindow = window.open('http://' + window.location.hostname
+                                                 + (window.location.port ? ':' : '')
+                                                 + window.location.port
+                                                 + '/linkedin', 'window', 'width=640,height=480,resizable,scrollbars,toolbar,menubar');
     const that = this;
     const myInterval = setInterval(() => {
       if (localStorage.getItem('sendLinkedinData')) {
@@ -114,7 +118,6 @@ export default class ResumeSavePrint extends React.Component {
       }
     }, 500);
   }
-
 
   showLoadButtonIf(loggedIn, resumeId, serverIsSaving) {
     let results = false;

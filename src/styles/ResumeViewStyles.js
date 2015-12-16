@@ -1,7 +1,4 @@
-import {
-  MasterTheme
-}
-from 'styles/MasterTheme';
+import { MasterTheme } from 'styles/MasterTheme';
 
 const font = MasterTheme.muli;
 const merriweather = MasterTheme.merriweather;
@@ -23,8 +20,7 @@ export const styles = {
     fontFamily: font
   },
   themeSelectDropdown: {
-    width: '130px',
-    // marginTop: '30px'
+    width: '130px'
   },
   menuItemStyle: {
     color: MasterTheme.orange,
@@ -53,8 +49,6 @@ export const styles = {
     margin: '3px'
   },
   paperLeftDiv: {
-    // marginTop: '5px',
-    // marginBottom: '5px'
   },
   paperLeftNavLabel: {
     color: MasterTheme.orange,
@@ -107,9 +101,6 @@ export const styles = {
   },
   hintStyle: {
     color: MasterTheme.lightGray,
-    // border: 'solid',
-    // borderColor: MasterTheme.orange,
-    // borderRadius: '6px',
     padding: '10px',
     paddingLeft: '20px',
     paddingBottom: '2px',
@@ -128,7 +119,7 @@ export const styles = {
     paddingTop: '40px'
   },
   bulletContainer: {      // This controls the visual paper effect of DnD bullets.
-    position: 'relative'  // Leave this here; it's controls behavior, not visible print style.
+    position: 'relative'  // Leave this here; it controls behavior, not visible print style.
   },
   editorField: {
     cursor: 'text',
