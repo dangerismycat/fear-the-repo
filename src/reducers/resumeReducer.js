@@ -90,10 +90,9 @@ export default createReducer(initialState, {
     const newBlockChildren = immutableBlockChildren.splice(payload.blockIndex, 1)
                                                    .splice(payload.atIndex, 0, payload.block)
                                                    .toJS();
-    return {
-      ...state,
+    return Object.assign({}, state, {
       blockChildren: newBlockChildren
-    };
+    });
   },
 
   [MOVE_BULLET]: (state, payload) => {
@@ -159,10 +158,7 @@ export default createReducer(initialState, {
   },
 
   [RESET_RESUME]: (state) => {
-    return {
-      ...state,
-      dummyResume
-    };
+    return Object.assign({}, state, dummyResume);
   },
 
   [SERVER_IS_SAVING_UPDATE]: (state, payload) => {
@@ -174,10 +170,7 @@ export default createReducer(initialState, {
   [UPDATE_LOCAL_STATE]: (state, payload) => {
     const newProperty = {};
     newProperty[payload.textFieldName] = payload.userInput;
-    return {
-      ...state,
-      newProperty
-    };
+    return Object.assign({}, state, newProperty);
   },
 
   [UPDATE_LOCAL_STATE_BLOCKS]: (state, payload) => {
@@ -215,10 +208,7 @@ export default createReducer(initialState, {
   },
 
   [UPDATE_RESUME_WITH_SERVER_RESPONSE]: (state, payload) => {
-    return {
-      ...state,
-      ...payload
-    };
+    return Object.assign({}, state, ...payload);
   },
 
   [UPDATE_THESAURUS_RESULTS]: (state, payload) => {
@@ -237,10 +227,7 @@ export default createReducer(initialState, {
       });
     }
 
-    return {
-      ...state,
-      thesaurusResults
-    };
+    return Object.assign({}, state, thesaurusResults);
   },
 
   [WORD_SEARCH]: (state, payload) => {
@@ -253,10 +240,9 @@ export default createReducer(initialState, {
                            .flatten()
                            .filter(word => word.indexOf(payload) !== -1)
                            .value();
-    return {
-      ...state,
+    return Object.assign({}, state, {
       wordCount: searchResults.length
-    };
+    });
   }
 
 });

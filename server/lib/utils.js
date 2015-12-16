@@ -39,21 +39,21 @@ export function serverResponseToNewResumeState(serverResponse) {
         webOther: serverResponse[0].webOther
       },
 
-      // newResumeState.resumeFooter = { // front end refactor, these not currently needed
-      //   school1: {
-      //     name: serverResponse[0].school1Name,
-      //     degree: serverResponse[0].school1Degree,
-      //     schoolEndYear: serverResponse[0].school1EndYear,
-      //     location: serverResponse[0].school1Location
-      //   },
-      //   school2: {
-      //     name: serverResponse[0].school2Name,
-      //     degree: serverResponse[0].school2Degree,
-      //     schoolEndYear: serverResponse[0].school2EndYear,
-      //     location: serverResponse[0].school2Location
-      //   },
-      //   personalStatement: serverResponse[0].personalStatement
-      // }
+      newResumeState.resumeFooter = { // front end refactor, these not currently needed
+        school1: {
+          name: serverResponse[0].school1Name,
+          degree: serverResponse[0].school1Degree,
+          schoolEndYear: serverResponse[0].school1EndYear,
+          location: serverResponse[0].school1Location
+        },
+        school2: {
+          name: serverResponse[0].school2Name,
+          degree: serverResponse[0].school2Degree,
+          schoolEndYear: serverResponse[0].school2EndYear,
+          location: serverResponse[0].school2Location
+        },
+        personalStatement: serverResponse[0].personalStatement
+      }
   }
 
   newResumeState.blockChildrenTempObj = {};

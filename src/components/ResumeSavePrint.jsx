@@ -24,7 +24,7 @@ export default class ResumeSavePrint extends React.Component {
     serverIsSavingUpdate: PropTypes.func,
     styles: PropTypes.object,
     validations: PropTypes.object,
-    userID: PropTypes.string
+    userID: PropTypes.number
   }
 
   handleLoad() {
